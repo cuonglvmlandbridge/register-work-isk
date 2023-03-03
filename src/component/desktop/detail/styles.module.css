@@ -1,0 +1,40 @@
+.item span:first-child {
+    min-width: 150px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.item {
+    margin-bottom: 15px;
+}
+
+.detail {
+    margin-left: 10px;
+    margin-top: 30px;
+}
+
+.item img {
+    cursor: pointer;
+}
+
+.item span {
+    word-break: break-all;
+}
+
+.btnCopy {
+    margin-top: 30px;
+    margin-left: 20px;
+}
+
+.user {
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.itemDate {
+    margin-bottom: 20px;
+}
+
+.itemDate label {
+    margin-right: 30px;
+}
