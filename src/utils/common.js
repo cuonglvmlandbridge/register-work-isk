@@ -1,7 +1,7 @@
 import Cookie from 'js-cookie';
 import {ID_APP_REGISTER} from '../component/common/const';
 
-const idAuth = '7'
+const idAuth = '32'
 
 export function fetchAllRecordsCustomer(appId, opt_offset, opt_limit, opt_records) {
   let offset = opt_offset || 0;
