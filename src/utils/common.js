@@ -1,7 +1,7 @@
 import Cookie from 'js-cookie';
 import {ID_APP_REGISTER} from '../component/common/const';
 
-const idAuth = '32'
+const idAuth = '7'
 
 export function fetchAllRecordsCustomer(appId, opt_offset, opt_limit, opt_records) {
   let offset = opt_offset || 0;
@@ -58,9 +58,9 @@ export function formatMoney(value) {
 }
 
 export const logout = () => {
-  Cookie.remove('staffIdLoginTest');
-  Cookie.remove('userISKTest');
-  Cookie.remove('passISKTest');
-  Cookie.remove('userLoginTest');
+  Cookie.remove('staffIdLogin');
+  Cookie.remove('userISK');
+  Cookie.remove('passISK');
+  Cookie.remove('userLogin');
   window.location.href = `${window.location.origin}/k/${idAuth}`
 }

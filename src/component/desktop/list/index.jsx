@@ -20,7 +20,7 @@ const FORMAT_DATETIME = 'YYYY/MM/DD HH:mm';
 
 const idApp = kintone.app.getId() || kintone.mobile.app.getId();
 
-const staffIdLogin = Cookie.get('staffIdLoginTest');
+const staffIdLogin = Cookie.get('staffIdLogin');
 
 const paramsURL = new URLSearchParams(location.search);
 
@@ -156,7 +156,7 @@ export default function TableList({isAdmin, isMobile}) {
             <div className={styles.btnTop}>
               <Button
                 type={'text'}
-                disabled={'time_in' in record}
+                disabled={!!record.time_in}
                 onClick={() => {
                   if(isMobile) {
                     window.location.href = `${window.location.origin}/k/m/${idApp}/edit?idStaff=${record.id_staff}&nameStaff=${record.name}&day=${date}`

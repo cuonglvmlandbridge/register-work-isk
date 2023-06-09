@@ -16,8 +16,8 @@ import {
 import { MenuOutlined } from '@ant-design/icons';
 import {logout} from '../../../utils/common';
 
-const userISK = Cookie.get('userISKTest');
-const nameUserLogin = Cookie.get('nameUserLoginTest');
+const userISK = Cookie.get('userISK');
+const nameUserLogin = Cookie.get('nameUserLogin');
 
 export default function MainLayout({children, isAdmin, isMobile}) {
 
