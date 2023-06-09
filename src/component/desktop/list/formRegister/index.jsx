@@ -21,8 +21,8 @@ const idApp = kintone.app.getId() || kintone.mobile.app.getId();
 
 const paramsURL = new URLSearchParams(location.search);
 
-const userISK = Cookie.get('nameUserLoginTest');
-const staffIdLogin = Cookie.get('staffIdLoginTest');
+const userISK = Cookie.get('nameUserLogin');
+const staffIdLogin = Cookie.get('staffIdLogin');
 
 export default function FormRegister({
   type,
