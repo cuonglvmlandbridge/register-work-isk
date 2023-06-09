@@ -156,7 +156,7 @@ export default function TableList({isAdmin, isMobile}) {
             <div className={styles.btnTop}>
               <Button
                 type={'text'}
-                disabled={!!record.time_in}
+                disabled={'time_in' in record}
                 onClick={() => {
                   if(isMobile) {
                     window.location.href = `${window.location.origin}/k/m/${idApp}/edit?idStaff=${record.id_staff}&nameStaff=${record.name}&day=${date}`
