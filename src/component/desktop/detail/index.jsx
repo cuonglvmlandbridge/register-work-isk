@@ -16,7 +16,7 @@ const FORMAT_MONTH = 'YYYY/MM';
 
 const DEFAULT_PAGE_SIZE = 10;
 
-const staffIdLogin = Cookie.get('staffIdLogin');
+const staffIdLogin = Cookie.get('staffIdLoginTest');
 
 export default function Detail({ idStaff, name, isAdmin, isMobile }) {
     const [data, setData] = useState([]);
