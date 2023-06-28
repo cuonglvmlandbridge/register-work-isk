@@ -4,15 +4,13 @@ import {Button, Col, DatePicker, Form, Row, Select, TimePicker} from 'antd';
 import {SaveOutlined} from '@ant-design/icons';
 import dayjs from 'dayjs';
 import {fetchAllRecordsCustomer} from '../../../../utils/common';
+import { ID_APP_STAFF, ID_APP_REPORT } from "../../../common/const";
 import MainLayout from '../../../layout/main';
 import {addRecord, updateRecord} from '../../../../api/list';
-
 import styles from './styles.module.css';
 import CardComponent from '../../common/card/CardComponent';
 import Detail from '../../detail';
 import Cookie from 'js-cookie';
-
-const idStaffApp = '6';
 
 const FORMAT_DATE_TIME = 'YYYY/MM/DD';
 const FORMAT_TIME = 'HH:mm';
@@ -33,6 +31,7 @@ export default function FormRegister({
 
   const [form] = Form.useForm();
   const [staff, setStaff] = useState([]);
+  const [disabledEdit, setDisabledEdit] = useState(false);
 
   const renderModalContentDetail = (data) => {
     return (
@@ -52,7 +51,6 @@ export default function FormRegister({
     const staffInfo = JSON.parse(payload.staff);
     let body = {
       'app': idApp,
-      // 'id': event.record.$id.value,
       'record': {
         'date': {
           'value': dayjs(payload.date).format(FORMAT_DATE_TIME)
@@ -127,10 +125,6 @@ export default function FormRegister({
           label: '出勤時間',
           name: 'time_in',
           labelAlign: 'left',
-          // rules: [{
-          //   required: true,
-          //   message: 'Required'
-          // }]
         },
         renderInput: () => <TimePicker format={'HH:mm'} placeholder={''}/>,
       },
@@ -149,7 +143,7 @@ export default function FormRegister({
         <Form form={form} autoComplete="off" onFinish={onFinish} scrollToFirstError>
           {renderModalContentDetail(registerEdit)}
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" disabled={disabledEdit}>
               <SaveOutlined/>{type === 'edit' ? '保存' : '登録'}
             </Button>
           </Form.Item>
@@ -159,7 +153,7 @@ export default function FormRegister({
   };
 
   useEffect(() => {
-    fetchAllRecordsCustomer(idStaffApp).then(function(records) {
+    fetchAllRecordsCustomer(ID_APP_STAFF).then(function(records) {
       const data = records.map((val) => ({
         value: JSON.stringify({
           name: val.name.value,
@@ -171,13 +165,17 @@ export default function FormRegister({
     });
   }, []);
 
-  useEffect(() => {
+  useEffect(async () => {
     form.setFieldsValue({
       date: dayjs(),
     });
     if (type === 'edit') {
       const data = event.record;
-      console.log(event)
+      const reportData = await getReportByDate(data?.date?.value);
+      setDisabledEdit(false)
+      if (reportData.length > 0) {
+        setDisabledEdit(true)
+      }
       form.setFieldsValue({
         date: data?.date.value && dayjs(data?.date?.value),
         time_in: data?.time_in.value && dayjs(data?.time_in?.value, FORMAT_TIME),
@@ -197,15 +195,8 @@ export default function FormRegister({
         if(staffIdLogin !== event.record.id_staff.value)
           window.location.href = `${window.location.origin}/k${isMobile ? '/m' : ''}/${idApp}`
       }
-      else {
-        // if(paramsURL.get('idStaff') !== staffIdLogin || paramsURL.get('idViewHistory') !== staffIdLogin || checkHash.idViewHistory !== staffIdLogin)
-        //   window.location.href = `${window.location.origin}/k${isMobile ? '/m' : ''}/${idApp}`
-      }
-
     }
   }, [event, type, isAdmin, staffIdLogin, checkHash, paramsURL])
-
-  console.log(event)
 
   useEffect(() => {
     if (paramsURL.get('idStaff') && paramsURL.get('nameStaff')) {
@@ -237,6 +228,16 @@ export default function FormRegister({
 
     return hashParams;
   }, [location])
+
+  const getReportByDate = (date) => {
+    const params = {
+      app: ID_APP_REPORT,
+      query: `date = "${date}"`
+    }
+    return kintone.api("/k/v1/records", "GET", params).then((res) => {
+      return res?.records;
+    });
+  }
 
   return (
         !(checkHistory || checkHash?.idViewHistory) ?
