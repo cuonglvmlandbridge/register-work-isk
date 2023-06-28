@@ -11,6 +11,7 @@ import {
   ID_APP_REPORT,
   ID_APP_REGISTER,
   ID_APP_AUTH,
+  ID_APP_CONFIG_SETTING,
   ID_APP_SEAT, ID_APP_TIPS, ID_APP_SALARY, ID_APP_SETTING, ID_APP_RANK
 } from '../../common/const';
 import { MenuOutlined } from '@ant-design/icons';
@@ -127,6 +128,11 @@ export default function MainLayout({children, isAdmin, isMobile}) {
       id: 13,
       text: 'ランク設定',
       onclick: () => window.location.href = `${URL_WEB}/k/${ID_APP_RANK}/`
+    },
+    {
+      id: 14,
+      text: '損益目標設定',
+      onclick: () => window.location.href = `${URL_WEB}/k/${ID_APP_CONFIG_SETTING}/`
     },
     {
       id: 9,
